@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard Inversiones</title>
+    <style>
+        body { font-family: Arial; margin: 40px; }
+        .indicadores { display: flex; gap: 40px; margin-bottom: 30px; }
+        .card {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: 250px;
+            text-align: center;
+            font-size: 18px;
+        }
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+        }
+        h1, h2 { margin-top: 30px; }
+    </style>
+</head>
+<body>
+
+<h1>📊 Dashboard Depósitos a Plazo</h1>
+
+<div class="indicadores">
+    <div class="card">
+        <strong>Capital Invertido</strong><br><br>
+        $ {{ capital_total }}
+    </div>
+
+    <div class="card">
+        <strong>Interés Ganado</strong><br><br>
+        $ {{ interes_total }}
+    </div>
+
+    <div class="card">
+        <strong>Próx. 30 días</strong><br><br>
+        $ {{ monto_30_dias }}
+    </div>
+</div>
+
+<h2>Flujo por Vencimientos</h2>
+{% if grafico_flujo %}
+    <img src="data:image/png;base64,{{ grafico_flujo }}">
+{% endif %}
+
+<h2>Distribución por Banco</h2>
+{% if grafico_bancos %}
+    <img src="data:image/png;base64,{{ grafico_bancos }}">
+{% endif %}
+
+<h2>Flujo Mensual</h2>
+<table>
+    <tr>
+        <th>Mes</th>
+        <th>Monto</th>
+    </tr>
+    {% for fila in tabla %}
+    <tr>
+        <td>{{ fila.mes }}</td>
+        <td>${{ fila.monto|floatformat:0 }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
